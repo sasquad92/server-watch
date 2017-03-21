@@ -1,7 +1,8 @@
 {
 	"Attemps": 4,
-	"RestartInterval": 15,
-	"CheckInterval": 60,
+	"RestartInterval": 2,
+	"CheckInterval": 5,
 	"NotificationMail": "admin@gmail.com",
-	"ServiceName": "SuperService"
+	"ServiceName": "superService",
+	"Path": "/etc/init.d/"
 }

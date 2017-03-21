@@ -1,9 +1,10 @@
 package main
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/sasquad92/server-watch/configuration"
+	"github.com/sasquad92/server-watch/service"
 	"github.com/sasquad92/server-watch/watchdog"
 )
 
@@ -11,13 +12,13 @@ func main() {
 	config, err := configuration.NewConfigFile("config.json")
 
 	if err != nil {
-		fmt.Println("ERROR!", err)
+		log.Fatal(err.Error())
 		return
 	}
 
-	watchdog := watchdog.NewWatchdog(config.Attemps, config.CheckInterval, config.RestartInterval)
+	serv := service.NewService(config.ServiceName, config.Path)
 
-	attemps := watchdog.GetAttemps()
+	wd := watchdog.NewWatchdog(config.Attemps, config.CheckInterval, config.RestartInterval, serv)
 
-	fmt.Println("watchdog will try to restart", config.ServiceName, "up to", attemps, "times")
+	wd.Watch()
 }

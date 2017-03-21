@@ -13,6 +13,7 @@ type Configuration struct {
 	CheckInterval    time.Duration
 	NotificationMail string
 	ServiceName      string
+	Path             string
 }
 
 // NewConfigFile creates new Configuration struct based on json config file.
