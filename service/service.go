@@ -5,9 +5,7 @@ import "fmt"
 
 // Service struct represents service which will be watched
 type Service struct {
-	name     string
-	path     string
-	fullPath string
+	name string
 }
 
 const (
@@ -17,11 +15,9 @@ const (
 )
 
 // NewService creates new service instance and return reference to service object
-func NewService(name string, path string) *Service {
+func NewService(name string) *Service {
 	service := Service{
-		name:     name,
-		path:     path,
-		fullPath: path + name,
+		name: name,
 	}
 
 	return &service
@@ -31,10 +27,10 @@ func NewService(name string, path string) *Service {
 // error is nil
 func (s *Service) Start() error {
 
-	_, err := exec.Command(SERVICE, s.fullPath, START).Output()
+	_, err := exec.Command(SERVICE, s.name, START).Output()
 
 	if err != nil {
-		return fmt.Errorf("Error during starting %s service in %s.", s.name, s.path)
+		return fmt.Errorf("Error during starting %s service.", s.name)
 	}
 
 	return nil
@@ -42,11 +38,16 @@ func (s *Service) Start() error {
 
 // CheckStatus checks if service is running
 func (s *Service) CheckStatus() bool {
-	_, err := exec.Command(SERVICE, s.fullPath, STATUS).Output()
+	_, err := exec.Command(SERVICE, s.name, STATUS).Output()
 
 	if err != nil {
 		return false
 	}
 
 	return true
+}
+
+// GetName returns service name
+func (s *Service) GetName() string {
+	return s.name
 }

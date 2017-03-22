@@ -2,7 +2,10 @@
 	"Attemps": 4,
 	"RestartInterval": 2,
 	"CheckInterval": 5,
-	"NotificationMail": "admin@gmail.com",
-	"ServiceName": "superService",
-	"Path": "/etc/init.d/"
+	"ServiceName": "bluetooth",
+	"NotificationMailFrom": "exampley@from.com",
+	"NotificationMailTo": "example@to.com",
+	"MailPassword": "secret",
+	"MailSmtp": "smtp.example.com",
+	"MailPort": 587
 }

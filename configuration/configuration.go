@@ -8,12 +8,15 @@ import (
 
 // Configuration struct represents config file
 type Configuration struct {
-	Attemps          int
-	RestartInterval  time.Duration
-	CheckInterval    time.Duration
-	NotificationMail string
-	ServiceName      string
-	Path             string
+	Attemps              int
+	RestartInterval      time.Duration
+	CheckInterval        time.Duration
+	ServiceName          string
+	NotificationMailFrom string
+	NotificationMailTo   string
+	MailPassword         string
+	MailSmtp             string
+	MailPort             int
 }
 
 // NewConfigFile creates new Configuration struct based on json config file.
