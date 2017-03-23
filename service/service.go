@@ -15,12 +15,17 @@ const (
 )
 
 // NewService creates new service instance and return reference to service object
-func NewService(name string) *Service {
+func NewService(name string) (*Service, error) {
+	
+	if !(len(name) > 0) {
+		return nil, fmt.Errorf("Service name is incorrect.")
+	}
+
 	service := Service{
 		name: name,
 	}
 
-	return &service
+	return &service, nil
 }
 
 // Start starts service, returns error - if occured. Otherwise

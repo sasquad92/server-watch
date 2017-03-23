@@ -32,14 +32,22 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
-	serv := service.NewService(config.ServiceName)
+	serv, err := service.NewService(config.ServiceName)
 
-	notifier := mail.NewMail(
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	notifier, err := mail.NewMail(
 		config.NotificationMailTo,
 		config.NotificationMailFrom,
 		config.MailSmtp,
 		config.MailPort,
 		config.MailPassword)
+
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 
 	wd := watchdog.NewWatchdog(
 		config.Attemps,

@@ -3,6 +3,7 @@ package mail
 import (
 	"fmt"
 	"net/smtp"
+	"strings"
 )
 
 type Mail struct {
@@ -14,7 +15,18 @@ type Mail struct {
 }
 
 // NewMail creates new instance of Mail and returns a reference to it
-func NewMail(to string, from string, smtp string, port int, pass string) *Mail {
+func NewMail(to string, from string, smtp string, port int, pass string) (*Mail, error) {
+
+	if !strings.Contains(to, "@") {
+		return nil, fmt.Errorf("Incorrect recipment email address.")
+	}
+	if !strings.Contains(from, "@") {
+		return nil, fmt.Errorf("Incorrect addressee email address.")
+	}
+	if !(len(pass) > 0) {
+		return nil, fmt.Errorf("Email password is incorrect.")
+	}
+
 	mail := Mail{
 		mailTo:   to,
 		mailFrom: from,
@@ -22,7 +34,7 @@ func NewMail(to string, from string, smtp string, port int, pass string) *Mail {
 		port:     port,
 		pass:     pass,
 	}
-	return &mail
+	return &mail, nil
 }
 
 // Send sends an email at specified address

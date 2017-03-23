@@ -19,7 +19,28 @@ type Watchdog struct {
 }
 
 // NewWatchdog creates new watchdog struct and initiate its fields
-func NewWatchdog(attemps int, checkInterval time.Duration, restartInterval time.Duration, serv *service.Service, notifier *mail.Mail) *Watchdog {
+func NewWatchdog(attemps int, checkInterval time.Duration, restartInterval time.Duration, serv *service.Service, notifier *mail.Mail) (*Watchdog, error) {
+
+	if attemps < 0 {
+		return nil, fmt.Errorf("Error during creating Watchdog - attemps less than 0.")
+	}
+
+	if checkInterval < 1 {
+		return nil, fmt.Errorf("Error during creating Watchdog - check interval less than 1.")
+	}
+
+	if restartInterval < 1 {
+		return nil, fmt.Errorf("Error during creating Watchdog - restart interval less than 1.")
+	}
+
+	if serv == nil {
+		return nil, fmt.Errorf("Error during creating Watchdog - serv is nil.")
+	}
+
+	if notifier == nil {
+		return nil, fmt.Errorf("Error during creating Watchdog - notifier is nil.")
+	}
+
 	watchdog := Watchdog{
 		attemps:         attemps,
 		checkInterval:   checkInterval,
@@ -28,7 +49,7 @@ func NewWatchdog(attemps int, checkInterval time.Duration, restartInterval time.
 		notifier:        notifier,
 	}
 
-	return &watchdog
+	return &watchdog, nil
 }
 
 // Watch runs the provided service and next check its status.
