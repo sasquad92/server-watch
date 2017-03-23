@@ -2,7 +2,6 @@ package mail
 
 import (
 	"fmt"
-	"log"
 	"net/smtp"
 )
 
@@ -37,7 +36,7 @@ func (m *Mail) Send(subject string, body string) error {
 	err := smtp.SendMail(m.smtp+port, smtp.PlainAuth("", m.mailFrom, m.pass, m.smtp), m.mailFrom, []string{m.mailTo}, []byte(msg))
 
 	if err != nil {
-		log.Fatal(err)
+		return err
 	}
 
 	return nil

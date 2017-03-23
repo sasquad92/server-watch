@@ -2,6 +2,7 @@ package main
 
 import (
 	"log"
+	"os"
 
 	"github.com/sasquad92/server-watch/configuration"
 	"github.com/sasquad92/server-watch/mail"
@@ -9,12 +10,26 @@ import (
 	"github.com/sasquad92/server-watch/watchdog"
 )
 
+var logFile *os.File
+
+func init() {
+	// creating log file
+	logFile, err := os.OpenFile("watch.log", os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	// setting logger logging destination
+	log.SetOutput(logFile)
+}
 func main() {
+	defer logFile.Close()
+
 	config, err := configuration.NewConfigFile("config.json")
 
 	if err != nil {
 		log.Fatal(err.Error())
-		return
 	}
 
 	serv := service.NewService(config.ServiceName)

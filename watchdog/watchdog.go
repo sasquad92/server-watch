@@ -37,7 +37,6 @@ func NewWatchdog(attemps int, checkInterval time.Duration, restartInterval time.
 func (w *Watchdog) Watch() {
 
 	for {
-
 		isRunning := w.service.CheckStatus()
 
 		if isRunning == false {
