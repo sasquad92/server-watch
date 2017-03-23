@@ -49,12 +49,16 @@ func main() {
 		log.Fatal(err.Error())
 	}
 
-	wd := watchdog.NewWatchdog(
+	wd, err := watchdog.NewWatchdog(
 		config.Attemps,
 		config.CheckInterval,
 		config.RestartInterval,
 		serv,
 		notifier)
+
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 
 	wd.Watch()
 }
