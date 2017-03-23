@@ -19,6 +19,16 @@ Please check config file and fill it with correct data.
 service --status-all
 ```
 
+## daemon
+
+If You want to run this program as a daemon
+
+```
+go run main.go & disown
+```
+
+or try [daemonize](http://software.clapper.org/daemonize/)
+
 ## these articles helped me
 * [working with services](https://blog.terminal.com/working-with-services/)
 * [sending an email from go program](https://gist.github.com/jpillora/cb46d183eca0710d909a)
